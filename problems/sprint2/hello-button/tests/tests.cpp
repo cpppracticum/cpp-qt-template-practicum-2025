@@ -13,6 +13,8 @@
 
 #include <mainwindow.h>
 
+#include "test_utils/practicum_assert.hpp"
+
 // add necessary includes here
 
 class TestYourApp : public QObject
@@ -68,21 +70,21 @@ void TestYourApp::initTestCase()
 
     window = new MainWindow();
 
-    
+
     QVERIFY2(window != nullptr, "Окно приложения не создано");
     window->show();
     QVERIFY2(window->isVisible(), "Окно приложения не активируется");
 
 
     auto buttons = window->findChildren<QPushButton*>();
-    QVERIFY2(buttons.size() == 1, "В приложении должна быть ровно одна копка QPushButton");
+    PRAC_COMPARE2(buttons.size(), 1, "В приложении должна быть ровно одна копка QPushButton");
     yourButton = buttons.first();
-    
+
 
     auto line_edits = window->findChildren<QLineEdit*>();
-    QVERIFY2(line_edits.size() == 1, "В приложении должно быть ровно одно поле QLineEdit");
+    PRAC_COMPARE2(line_edits.size(), 1, "В приложении должно быть ровно одно поле QLineEdit");
     textView = line_edits.first();
-    
+
     label = findElementByName<QLabel>("lbl_result");
     QVERIFY2(label != nullptr, "Метка с именем lbl_result отсутствует в приложении");
 
@@ -96,7 +98,7 @@ void TestYourApp::TestHelloButton_1()
     QTest::mouseClick(yourButton, Qt::LeftButton);
 
     QString expected_text = "Привет из Qt, " + name + "!";
-    QVERIFY2(label->text() == expected_text, "Выведенный текст не совпадает с ожидаемым");
+    PRAC_COMPARE2(label->text(), expected_text, "Выведенный текст не совпадает с ожидаемым");
 
 }
 
@@ -108,8 +110,8 @@ void TestYourApp::TestHelloButton_2()
     QTest::mouseClick(yourButton, Qt::LeftButton);
 
     QString expected_text = "Привет из Qt, " + name + "!";
-    QVERIFY2(label->text() == expected_text, "Выведенный текст не совпадает с ожидаемым");
-    
+    PRAC_COMPARE2(label->text(), expected_text, "Выведенный текст не совпадает с ожидаемым");
+
 }
 
 void TestYourApp::cleanupTestCase()

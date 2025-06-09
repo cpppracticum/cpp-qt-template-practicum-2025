@@ -27,7 +27,7 @@ void MainWindow::ApplyModel(const Movie &selection) {
     // Заполните виджеты ui->cb_list_done и ui->cb_list_wait,
     // используя их методы clear и addItems.
     // Вам пригодится метод ToString.
-    // Также примените выделение, используя метод 
+    // Также примените выделение, используя метод
     // setCurrentIndex.
 }
 

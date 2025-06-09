@@ -8,6 +8,7 @@
 #include "model.h"
 #include "view.h"
 
+#include "test_utils/practicum_assert.hpp"
 
 void checkViewStatus(
     const QString& expected_status,
@@ -18,9 +19,9 @@ void checkViewStatus(
     const auto actual_status_color = View::getStatusColor();
     const auto actual_status_boldness = View::getStatusBoldness();
 
-    QVERIFY2(actual_status == expected_status, "Статус не совпадает с ожидаемым");
-    QVERIFY2(actual_status_color == expected_status_color, "Цвет статуса не совпадает с ожидаемым");
-    QVERIFY2(actual_status_boldness == expected_status_boldness, "Жирность шрифта статуса не совпадает с ожидаемой");
+    PRAC_COMPARE2(actual_status, expected_status, "Статус не совпадает с ожидаемым");
+    PRAC_COMPARE2(actual_status_color, expected_status_color, "Цвет статуса не совпадает с ожидаемым");
+    PRAC_COMPARE2(actual_status_boldness, expected_status_boldness, "Жирность шрифта статуса не совпадает с ожидаемой");
 }
 
 void checkNextMoveStatus(const Symbol& next_player) {
@@ -40,13 +41,13 @@ void checkViewCallbacks() {
 void checkViewSize(const size_t size_x, const size_t size_y) {
     const auto size = View::getSize();
     const std::pair expected_size{size_x, size_y};
-    QVERIFY2(size == expected_size, "Размер поля представления не соответсвуте ожидаемому");
+    PRAC_COMPARE2(size, expected_size, "Размер поля представления не соответсвуте ожидаемому");
 }
 
 void checkModelSize(const size_t size_x, const size_t size_y) {
     const auto size = Model::getSize();
     const std::pair expected_size{size_x, size_y};
-    QVERIFY2(size == expected_size, "Размер поля модели не соответсвуте ожидаемому");
+    PRAC_COMPARE2(size, expected_size, "Размер поля модели не соответсвуте ожидаемому");
 }
 
 void checkNewGame(const size_t size_x, const size_t size_y) {
@@ -58,8 +59,8 @@ void checkNewGame(const size_t size_x, const size_t size_y) {
 
 void checkViewMoves(const std::vector<View::Move>& expected_moves) {
     auto moves = View::getMoves();
-    QVERIFY2(moves.size() == expected_moves.size(), "Количество ходов не соответствует ожидаемому");
-    QVERIFY2(moves == expected_moves, "Фактические ходы не соответсвуют ожидаемым");
+    PRAC_COMPARE2(moves.size(), expected_moves.size(), "Количество ходов не соответствует ожидаемому");
+    PRAC_COMPARE2(moves, expected_moves, "Фактические ходы не соответсвуют ожидаемым");
 }
 
 void checkViewWinningMovesStyle(const std::vector<std::pair<size_t, size_t>>& winning_moves) {
@@ -71,8 +72,7 @@ void checkViewWinningMovesStyle(const std::vector<std::pair<size_t, size_t>>& wi
         expected_styles.push_back(style);
     }
 
-    QVERIFY(styles == expected_styles);
-
+    PRAC_COMPARE(styles, expected_styles);
 }
 
 

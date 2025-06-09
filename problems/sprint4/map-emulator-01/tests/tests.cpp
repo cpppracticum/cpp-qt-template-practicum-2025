@@ -21,6 +21,7 @@
 
 #include "utils.h"
 
+#include "test_utils/practicum_assert.hpp"
 
 class TestYourApp : public QObject
 {
@@ -150,9 +151,9 @@ void TestYourApp::checkExpectedMap(const std::map<QString, QString>& expectedMap
         expected.push_back(expectedVector[i].toStdString());
     }
 
-    QVERIFY2(expected.size() == actual.size(), "Размер словаря не совпадает с ожидаемым");
+    PRAC_COMPARE2(expected.size(), actual.size(), "Размер словаря не совпадает с ожидаемым");
     const auto size_from_string = txt_size->text().toUInt();
-    QVERIFY2(actual.size() == size_from_string, "Размер в поле txt_size не совпадает с реальным");
+    PRAC_COMPARE2(actual.size(), size_from_string, "Размер в поле txt_size не совпадает с реальным");
 
     std::sort(expected.begin(), expected.end());
     std::sort(actual.begin(), actual.end());
@@ -160,12 +161,12 @@ void TestYourApp::checkExpectedMap(const std::map<QString, QString>& expectedMap
     for (size_t i = 0; i < expectedVector.size(); ++i) {
         const auto& expected_string = expectedVector.at(i);
         const auto& actual_string = actual_vector.at(i);
-        QVERIFY2(expected_string == actual_string, "Запись в словаре не совпадает с ожидаемой");
+        PRAC_COMPARE2(expected_string, actual_string, "Запись в словаре не совпадает с ожидаемой");
     }
 
     const auto actual_pos = list_widget->currentRow();
     const auto expected_pos = std::distance<std::map<QString, QString>::const_iterator>(dict.begin(), it);
-    QVERIFY2(actual_pos == expected_pos, "Индекс выбранного элемента не совпадает с ожидаемым");
+    PRAC_COMPARE2(actual_pos, expected_pos, "Индекс выбранного элемента не совпадает с ожидаемым");
 }
 
 void TestYourApp::setCurrentElement(int index) {

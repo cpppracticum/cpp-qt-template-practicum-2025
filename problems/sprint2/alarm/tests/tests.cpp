@@ -104,7 +104,7 @@ void TestYourApp::init()
     QVERIFY2(window != nullptr, "Окно приложения не создано");
     window->show();
     QVERIFY2(window->isVisible(), "Окно приложения не активируется");
-    
+
     timer = prac::QTimer::getLastCreated();
     QVERIFY2(timer, "Не найден таймер");
 
@@ -302,7 +302,11 @@ void TestYourApp::TestSetMelody() {
     action_load_file->trigger();
 
     PRAC_COMPARE(lbl_melody->text(), melody_name);
-    PRAC_COMPARE(player->getSource(), melody_name);
+    PRAC_COMPARE2(
+        player->getSource(),
+        "file:" + melody_name,
+        "Если у вас отсутствует префикс \"file:\", используйте QUrl::fromLocalFile в методе setSource"
+    );
 }
 
 

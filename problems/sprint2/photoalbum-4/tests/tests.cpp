@@ -195,14 +195,14 @@ void TestYourApp::TestChooseEmptyDir() {
     QVERIFY2(!btn_right->isEnabled(), "Кнопа btn_right должна быть неактивна для пустой директории");
 }
 
-void TestYourApp::TestChooseDir() {    
+void TestYourApp::TestChooseDir() {
     // меняем директорию на фальшивую из мока - там нет файлов
     // при попытке сматчить файлы здесь окно рухнет, т.к. не обрабатывает пустые директории
     prac::QFileDialog::setMockedExistingDirectory(QString("there/is/no/such/directory"));
     action_choose_dir->trigger();
 
     // возвращаем директорию к нормальной (из ресурсов)
-    prac::QFileDialog::setMockedExistingDirectory(dir_path); 
+    prac::QFileDialog::setMockedExistingDirectory(dir_path);
     action_choose_dir->trigger();
 
     // проверяем, что всё в порядке с файлами

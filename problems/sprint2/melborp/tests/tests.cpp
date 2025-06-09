@@ -13,7 +13,7 @@
 
 #include <mainwindow.h>
 
-// add necessary includes here
+#include "test_utils/practicum_assert.hpp"
 
 class TestYourApp : public QObject
 {
@@ -34,7 +34,7 @@ class TestYourApp : public QObject
     template<class T>
     T* findElementByName(const QString& name) {
         for (auto label : window->findChildren<T*>())
-        {   
+        {
             if (label->objectName() == name)
             {
                 return label;
@@ -73,12 +73,12 @@ void TestYourApp::initTestCase()
 
 
     auto buttons = window->findChildren<QPushButton*>();
-    QVERIFY2(buttons.size() == 1, "В приложении должна быть ровно одна копка QPushButton");
+    PRAC_COMPARE2(buttons.size(), 1, "В приложении должна быть ровно одна копка QPushButton");
     yourButton = buttons.first();
-    
+
 
     auto line_edits = window->findChildren<QLineEdit*>();
-    QVERIFY2(line_edits.size() == 1, "В приложении должно быть ровно одно поле QLineEdit");
+    PRAC_COMPARE2(line_edits.size(), 1, "В приложении должно быть ровно одно поле QLineEdit");
     textView = line_edits.first();
 
 }
@@ -90,14 +90,14 @@ void TestYourApp::TestMelborpButton_1()
     QString q_reversed_text = "!gnirts emosewa ym si sihT";
 
     textView->setText(q_original_text);
-    QVERIFY2(textView->text() == q_original_text, "Выведенный текст не совпадает с исходным");
+    PRAC_COMPARE2(textView->text(), q_original_text, "Выведенный текст не совпадает с исходным");
 
     QTest::mouseClick(yourButton, Qt::LeftButton);
 
-    QVERIFY2(textView->text() == q_reversed_text, "Выведенный текст не совпадает с перевёрнутым");
+    PRAC_COMPARE2(textView->text(), q_reversed_text, "Выведенный текст не совпадает с перевёрнутым");
 
     QTest::mouseClick(yourButton, Qt::LeftButton);
-    QVERIFY2(textView->text() == q_original_text, "Повторно перевёрнутый текст не совпадает с исходным");
+    PRAC_COMPARE2(textView->text(), q_original_text, "Повторно перевёрнутый текст не совпадает с исходным");
 
 }
 
@@ -108,14 +108,14 @@ void TestYourApp::TestMelborpButton_2()
     QString reversed_text = "!тевирП";
 
     textView->setText(original_text);
-    QVERIFY2(textView->text() == original_text, "Выведенный текст не совпадает с исходным");
+    PRAC_COMPARE2(textView->text(), original_text, "Выведенный текст не совпадает с исходным");
 
     QTest::mouseClick(yourButton, Qt::LeftButton);
 
-    QVERIFY2(textView->text() == reversed_text, "Выведенный текст не совпадает с перевёрнутым");
+    PRAC_COMPARE2(textView->text(), reversed_text, "Выведенный текст не совпадает с перевёрнутым");
 
     QTest::mouseClick(yourButton, Qt::LeftButton);
-    QVERIFY2(textView->text() == original_text, "Повторно перевёрнутый текст не совпадает с исходным");
+    PRAC_COMPARE2(textView->text(), original_text, "Повторно перевёрнутый текст не совпадает с исходным");
 
 }
 

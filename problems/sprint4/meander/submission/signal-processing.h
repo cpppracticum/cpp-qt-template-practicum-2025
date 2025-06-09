@@ -25,10 +25,10 @@ inline void ReplicateSignal(std::vector<int16_t>& signal, size_t desired_length)
 
 inline std::vector<int16_t> GenerateSignal(SignalData data) {
     // Создайте сигнал, имеющий нужные параметры.
-    // Формула синусоидального сигнала: 
+    // Формула синусоидального сигнала:
     // data.amplitude * sin(i * 2 * std::numbers::pi / data.wave_length).
     //
-    // Формула косинусоидального сигнала: 
+    // Формула косинусоидального сигнала:
     // data.amplitude * cos(i * 2 * std::numbers::pi / data.wave_length).
     //
     // Меандр создайте через std::fill_n.
@@ -36,11 +36,11 @@ inline std::vector<int16_t> GenerateSignal(SignalData data) {
     // static_cast<int>(data.cycle * data.wave_length).
 }
 
-inline void ApplyDecayAndAttack(std::vector<int16_t>& signal, 
+inline void ApplyDecayAndAttack(std::vector<int16_t>& signal,
                                 size_t max_length) {
     // Примените затухание и атаку сигнала.
     // Используйте принцип, данный в уроке.
-    // Затухание применяется к концу сигнала, а 
+    // Затухание применяется к концу сигнала, а
     // атака симметрично - к началу.
     // Используйте алгоритм transform.
 }

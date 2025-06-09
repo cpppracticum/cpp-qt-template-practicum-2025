@@ -18,6 +18,8 @@
 
 #include "prac/QPainter"
 
+#include "test_utils/practicum_assert.hpp"
+
 using namespace std;
 
 
@@ -130,7 +132,7 @@ void TestYourApp::ValidateSnowflake()
 
     checkPens(prac::QPainter::pens, line_width);
 
-    QVERIFY2(prac::QPainter::lines.size() == 6, "Количество линий, которые были нарисованы, отлично от шести");
+    PRAC_COMPARE2(prac::QPainter::lines.size(), 6, "Количество линий, которые были нарисованы, отлично от шести");
     for (auto i = 0; i < 6; ++i)
     {
         QPointF const rotated = RotatePoint({line_length, 0}, rotation + i * 60);
