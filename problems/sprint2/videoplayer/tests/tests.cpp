@@ -17,6 +17,8 @@
 #include <prac/QMediaPlayer>
 #include <prac/QFileDialog>
 
+#include "test_utils/practicum_assert.hpp"
+
 #include <iostream>
 
 using namespace std;
@@ -138,7 +140,7 @@ void TestYourApp::init()
 
     sld_pos = getChild<QSlider>(window, "sld_pos", "QSlider");
     sld_volume = getChild<QSlider>(window, "sld_volume", "QSlider");
-    
+
     video_output = getChild<QVideoWidget>(window, "video_output", "QVideoWidget");
 }
 
@@ -151,45 +153,45 @@ void TestYourApp::TestBtnChoose() {
     prac::QFileDialog::setMockedOpenFileName(QString("test_filename_for_test"));
     QTest::mouseClick(btn_choose, Qt::LeftButton);
     QVERIFY2(prac::QMediaPlayer::sourceIsSet(), "Источник медиа через setSource не установлен");
-    QVERIFY2(prac::QMediaPlayer::getSource() == QUrl("file:test_filename_for_test"), "Источник медиа установлен неправильно");
-    QVERIFY2(prac::QMediaPlayer::getState() == prac::QMediaPlayer::PlaybackState::PlayingState, "Не начато воспроизведение через play привыборе источника медиа");
+    PRAC_COMPARE2(prac::QMediaPlayer::getSource(), QUrl::fromLocalFile("test_filename_for_test"), "Источник медиа установлен неправильно");
+    PRAC_COMPARE2(prac::QMediaPlayer::getState(), prac::QMediaPlayer::PlaybackState::PlayingState, "Не начато воспроизведение через play привыборе источника медиа");
 }
 
 void TestYourApp::TestMediaStatusChanged() {
     prac::QMediaPlayer::getLastCreated()->emitMediaStatusChanged(prac::QMediaPlayer::LoadedMedia);
-    QVERIFY2(sld_pos->maximum() == 123, "После сигнала mediaStatusChanged установлена неправильная длительность");
+    PRAC_COMPARE2(sld_pos->maximum(), 123, "После сигнала mediaStatusChanged установлена неправильная длительность");
 
     prac::QMediaPlayer::getLastCreated()->emitPositionChanged(50);
-    QVERIFY2(sld_pos->value() == 50, "После сдвига изменения позиции воспроизведения должна измениться позиция слайдера");
+    PRAC_COMPARE2(sld_pos->value(), 50, "После сдвига изменения позиции воспроизведения должна измениться позиция слайдера");
 
     prac::QMediaPlayer::getLastCreated()->emitPositionChanged(100);
-    QVERIFY2(sld_pos->value() == 100, "После сдвига изменения позиции воспроизведения должна измениться позиция слайдера");
+    PRAC_COMPARE2(sld_pos->value(), 100, "После сдвига изменения позиции воспроизведения должна измениться позиция слайдера");
 }
 
 void TestYourApp::TestPositionChanged() {
     sld_pos->setSliderPosition(33);
-    QVERIFY2(prac::QMediaPlayer::getPosition() == 33, "Позиция в плеере не изменилась после сдвига слайдера sld_pos");
+    PRAC_COMPARE2(prac::QMediaPlayer::getPosition(), 33, "Позиция в плеере не изменилась после сдвига слайдера sld_pos");
     sld_pos->setSliderPosition(47);
-    QVERIFY2(prac::QMediaPlayer::getPosition() == 47, "Позиция в плеере не изменилась после сдвига слайдера sld_pos");
+    PRAC_COMPARE2(prac::QMediaPlayer::getPosition(), 47, "Позиция в плеере не изменилась после сдвига слайдера sld_pos");
 }
 
 void TestYourApp::TestBtnPause() {
     prac::QMediaPlayer::getState() = prac::QMediaPlayer::PlaybackState::StoppedState;
     QTest::mouseClick(btn_pause, Qt::LeftButton);
-    QVERIFY2(prac::QMediaPlayer::getPosition() == 0, "Позиция воспроизведения не установлена в 0 перед началом воспроизведения");
-    QVERIFY2(prac::QMediaPlayer::getState() == prac::QMediaPlayer::PlaybackState::PlayingState, "Воспроизведение не начато");
+    PRAC_COMPARE2(prac::QMediaPlayer::getPosition(), 0, "Позиция воспроизведения не установлена в 0 перед началом воспроизведения");
+    PRAC_COMPARE2(prac::QMediaPlayer::getState(), prac::QMediaPlayer::PlaybackState::PlayingState, "Воспроизведение не начато");
     QTest::mouseClick(btn_pause, Qt::LeftButton);
-    QVERIFY2(prac::QMediaPlayer::getState() == prac::QMediaPlayer::PlaybackState::PausedState, "Воспроизведение не поставлено на паузу");
+    PRAC_COMPARE2(prac::QMediaPlayer::getState(), prac::QMediaPlayer::PlaybackState::PausedState, "Воспроизведение не поставлено на паузу");
     QTest::mouseClick(btn_pause, Qt::LeftButton);
-    QVERIFY2(prac::QMediaPlayer::getState() == prac::QMediaPlayer::PlaybackState::PlayingState, "Воспроизведение не снято с паузы");
+    PRAC_COMPARE2(prac::QMediaPlayer::getState(), prac::QMediaPlayer::PlaybackState::PlayingState, "Воспроизведение не снято с паузы");
 }
 
 void TestYourApp::TestVolume() {
     sld_volume->setSliderPosition(25);
-    QVERIFY2(prac::QMediaPlayer::getLastCreated()->audioOutput()->volume() == 0.25, "При установке слайдера громкости в позицию 25 нужно установить громкость 0.25");
+    PRAC_COMPARE2(prac::QMediaPlayer::getLastCreated()->audioOutput()->volume(), 0.25, "При установке слайдера громкости в позицию 25 нужно установить громкость 0.25");
 
     sld_volume->setSliderPosition(50);
-    QVERIFY2(prac::QMediaPlayer::getLastCreated()->audioOutput()->volume() == 0.5, "При установке слайдера громкости в позицию 50 нужно установить громкость 0.5");
+    PRAC_COMPARE2(prac::QMediaPlayer::getLastCreated()->audioOutput()->volume(), 0.5, "При установке слайдера громкости в позицию 50 нужно установить громкость 0.5");
 }
 
 void TestYourApp::cleanupTestCase()

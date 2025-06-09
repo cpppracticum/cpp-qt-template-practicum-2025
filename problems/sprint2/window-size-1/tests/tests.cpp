@@ -11,14 +11,12 @@
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QLabel>
 
-
-
 #include <mainwindow.h>
 #include <iostream>
 
+#include "test_utils/practicum_assert.hpp"
+
 using namespace std;
-
-
 
 namespace {
 
@@ -90,13 +88,13 @@ void TestYourApp::init()
 void check_lbl_alignment(QMainWindow* parent, QLabel* child)
 {
 
-    QVERIFY2(child->size() == parent->size(), "Размер виджета не равен размеру окна");
-    QVERIFY2(child->pos() == QPoint(0, 0), "Размер виджета не равен размеру окна");
+    PRAC_COMPARE2(child->size(), parent->size(), "Размер виджета не равен размеру окна");
+    PRAC_COMPARE2(child->pos(), QPoint(0, 0), "Размер виджета не равен размеру окна");
 
     auto alignment = child->property("alignment");
     QVERIFY2(alignment.isValid(), "Выравнивание текста в lbl_size должно быть задано полем alignement");
     auto value = alignment.value<Qt::AlignmentFlag>();
-    QVERIFY2(value == Qt::AlignCenter, "Выравннивание текста в lbl_size должно быть по центру");
+    PRAC_COMPARE2(value, Qt::AlignCenter, "Выравннивание текста в lbl_size должно быть по центру");
 }
 
 void TestYourApp::TestDefault()

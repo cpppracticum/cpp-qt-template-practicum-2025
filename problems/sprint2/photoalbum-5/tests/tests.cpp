@@ -16,6 +16,8 @@
 
 #include <string>
 
+#include "test_utils/practicum_assert.hpp"
+
 using namespace std;
 
 namespace {
@@ -158,7 +160,7 @@ void TestYourApp::TestMenu0(){
     auto action = findElementByText<QAction>(window, "Отключить", "QAction");
     action->trigger();
 
-    QVERIFY(timer->getInterval() == 0);
+    PRAC_COMPARE(timer->getInterval(), 0);
 }
 
 void TestYourApp::TestMenu1(){
@@ -166,7 +168,7 @@ void TestYourApp::TestMenu1(){
     auto action = findElementByText<QAction>(window, "1 секунда", "QAction");
     action->trigger();
 
-    QVERIFY(timer->getInterval() == 1000);
+    PRAC_COMPARE(timer->getInterval(), 1000);
 }
 
 void TestYourApp::TestMenu5(){
@@ -174,7 +176,7 @@ void TestYourApp::TestMenu5(){
     auto action = findElementByText<QAction>(window, "5 секунд", "QAction");
     action->trigger();
 
-    QVERIFY(timer->getInterval() == 5000);
+    PRAC_COMPARE(timer->getInterval(), 5000);
 }
 
 void TestYourApp::TestMenu10(){
@@ -182,7 +184,7 @@ void TestYourApp::TestMenu10(){
     auto action = findElementByText<QAction>(window, "10 секунд", "QAction");
     action->trigger();
 
-    QVERIFY(timer->getInterval() == 10000);
+    PRAC_COMPARE(timer->getInterval(), 10000);
 }
 
 void TestYourApp::TestClick(){

@@ -12,8 +12,7 @@
 
 #include <mainwindow.h>
 
-
-
+#include "test_utils/practicum_assert.hpp"
 
 int getDayNumber(int day, int month, int year)
 {
@@ -156,22 +155,22 @@ void TestYourApp::CheckValidDate(int day, int month, int year, const QString& mo
     QString date("%1.%2.%3");
     date = date.arg(day, 2, 10, QChar('0')).arg(month, 2, 10, QChar('0')).arg(year);
 
-    QVERIFY2(le_day->text().toInt() == day, "Выведенный день не совпадает с ожидаемым");
-    QVERIFY2(le_month->text().toInt() == month, "Выведенный месяц не совпадает с ожидаемым");
-    QVERIFY2(le_year->text().toInt() == year, "Выведенный год не совпадает с ожидаемым");
+    PRAC_COMPARE2(le_day->text().toInt(), day, "Выведенный день не совпадает с ожидаемым");
+    PRAC_COMPARE2(le_month->text().toInt(), month, "Выведенный месяц не совпадает с ожидаемым");
+    PRAC_COMPARE2(le_year->text().toInt(), year, "Выведенный год не совпадает с ожидаемым");
 
-    QVERIFY2(le_date->text() == date, "Выведенная дата не совпадает с ожидаемой");
+    PRAC_COMPARE2(le_date->text(), date, "Выведенная дата не совпадает с ожидаемой");
 
     QString format1 = QString("%1.%2.%3").arg(day, 2, 10, QChar('0')).arg(month, 2, 10, QChar('0')).arg(year);
     QString format2 = QString("%2/%1/%3").arg(day, 2, 10, QChar('0')).arg(month, 2, 10, QChar('0')).arg(year);
     QString format3 = QString("%1 %2 %3 года").arg(day, 2, 10, QChar('0')).arg(month_name).arg(year);
 
-    QVERIFY2(lbl_format_type1->text() == format1, "Выведенный текст в формате 1 не совпадает с ожидаемым");
-    QVERIFY2(lbl_format_type2->text() == format2, "Выведенный текст в формате 2 не совпадает с ожидаемым");
-    QVERIFY2(lbl_format_type3->text() == format3, "Выведенный текст в формате 3 не совпадает с ожидаемым");
+    PRAC_COMPARE2(lbl_format_type1->text(), format1, "Выведенный текст в формате 1 не совпадает с ожидаемым");
+    PRAC_COMPARE2(lbl_format_type2->text(), format2, "Выведенный текст в формате 2 не совпадает с ожидаемым");
+    PRAC_COMPARE2(lbl_format_type3->text(), format3, "Выведенный текст в формате 3 не совпадает с ожидаемым");
 
     QString message = QString("Это %1 день в %2 году").arg(getDayNumber(day, month, year)).arg(year);
-    QVERIFY2(lbl_message->text() == message, "Выведенное сообщение не совпадает с ожидаемым");
+    PRAC_COMPARE2(lbl_message->text(), message, "Выведенное сообщение не совпадает с ожидаемым");
 
 }
 
@@ -179,9 +178,9 @@ void TestYourApp::CheckValidDate(int day, int month, int year, const QString& mo
 void TestYourApp::CheckInvalidDate()
 {
 
-    QVERIFY2(lbl_format_type1->text() == "", "В случае невалидной даты поле lbl_format_type1 должно быть очищено");
-    QVERIFY2(lbl_format_type2->text() == "", "В случае невалидной даты поле lbl_format_type2 должно быть очищено");
-    QVERIFY2(lbl_format_type3->text() == "", "В случае невалидной даты поле lbl_format_type3 должно быть очищено");
+    PRAC_COMPARE2(lbl_format_type1->text(), "", "В случае невалидной даты поле lbl_format_type1 должно быть очищено");
+    PRAC_COMPARE2(lbl_format_type2->text(), "", "В случае невалидной даты поле lbl_format_type2 должно быть очищено");
+    PRAC_COMPARE2(lbl_format_type3->text(), "", "В случае невалидной даты поле lbl_format_type3 должно быть очищено");
 
 }
 
@@ -277,7 +276,7 @@ void TestYourApp::TestIncorrectDate()
 
     auto CheckIncorrectDate = [this] (){
         CheckInvalidDate();
-        QVERIFY2(lbl_message->text() == "Некорректная дата", "В случае невалидной даты в поле lbl_message должна быть надпись \"Некорректная дата\"");
+        PRAC_COMPARE2(lbl_message->text(), "Некорректная дата", "В случае невалидной даты в поле lbl_message должна быть надпись \"Некорректная дата\"");
     };
     CheckIncorrectDate();
     le_date->setText("01.0.");
@@ -296,7 +295,7 @@ void TestYourApp::TestNonExistingDate()
 
     auto CheckNonExistingDate = [this] (){
         CheckInvalidDate();
-        QVERIFY2(lbl_message->text() == "Такой даты не существует", "В случае несуществующей даты в поле lbl_message должна быть надпись \"Такой даты не существует\"");
+        PRAC_COMPARE2(lbl_message->text(), "Такой даты не существует", "В случае несуществующей даты в поле lbl_message должна быть надпись \"Такой даты не существует\"");
     };
 
     le_date->setText("30.02.2020");

@@ -21,6 +21,7 @@
 
 #include "utils.h"
 
+#include "test_utils/practicum_assert.hpp"
 
 std::vector<int16_t> player_data{};
 
@@ -144,7 +145,7 @@ void TestYourApp::TestSignalReplication() {
     auto meander = generateMeander(data, false);
     ReplicateSignal(meander, data.samples);
     const auto expected_meander = generateMeander(data);
-    QVERIFY(meander == expected_meander);
+    PRAC_COMPARE(meander, expected_meander);
 
     data.signal_type = SignalType::kSin;
     data.wave_length = 30;
@@ -154,14 +155,14 @@ void TestYourApp::TestSignalReplication() {
     auto sin = generateSin(data, false);
     ReplicateSignal(sin, data.samples);
     const auto expected_sin = generateSin(data);
-    QVERIFY(sin == expected_sin);
+    PRAC_COMPARE(sin, expected_sin);
 
     data.signal_type = SignalType::kCos;
 
     auto cos = generateCos(data, false);
     ReplicateSignal(cos, data.samples);
     const auto expected_cos = generateCos(data);
-    QVERIFY(cos == expected_cos);
+    PRAC_COMPARE(cos, expected_cos);
 }
 
 void TestYourApp::TestSinSignal() {
@@ -176,7 +177,7 @@ void TestYourApp::TestSinSignal() {
     };
     const auto vec = GenerateSignal(data);
     const auto expected_vec = generateSin(data);
-    QVERIFY(vec == expected_vec);
+    PRAC_COMPARE(vec, expected_vec);
 
     data.wave_length = 275;
     data.samples = 19867;
@@ -185,14 +186,14 @@ void TestYourApp::TestSinSignal() {
 
     const auto vec2 = GenerateSignal(data);
     const auto expected_vec2 = generateSin(data);
-    QVERIFY(vec2 == expected_vec2);
+    PRAC_COMPARE(vec2, expected_vec2);
 
     data.wave_length = 2750;
     data.samples = 198;
 
     const auto vec3 = GenerateSignal(data);
     const auto expected_vec3 = generateSin(data);
-    QVERIFY(vec3 == expected_vec3);
+    PRAC_COMPARE(vec3, expected_vec3);
 }
 
 void TestYourApp::TestCosSignal() {
@@ -207,7 +208,7 @@ void TestYourApp::TestCosSignal() {
     };
     const auto vec = GenerateSignal(data);
     const auto expected_vec = generateCos(data);
-    QVERIFY(vec == expected_vec);
+    PRAC_COMPARE(vec, expected_vec);
 
     data.wave_length = 983;
     data.samples = 17653;
@@ -216,7 +217,7 @@ void TestYourApp::TestCosSignal() {
 
     const auto vec2 = GenerateSignal(data);
     const auto expected_vec2 = generateCos(data);
-    QVERIFY(vec2 == expected_vec2);
+    PRAC_COMPARE(vec2, expected_vec2);
 
 
     data.wave_length = 9830;
@@ -224,7 +225,7 @@ void TestYourApp::TestCosSignal() {
 
     const auto vec3 = GenerateSignal(data);
     const auto expected_vec3 = generateCos(data);
-    QVERIFY(vec3 == expected_vec3);
+    PRAC_COMPARE(vec3, expected_vec3);
 
 }
 
@@ -240,7 +241,7 @@ void TestYourApp::TestMeanderSignal() {
     };
     const auto vec = GenerateSignal(data);
     const auto expected_vec = generateMeander(data);
-    QVERIFY(vec == expected_vec);
+    PRAC_COMPARE(vec, expected_vec);
 
     data.wave_length = 10000;
     data.samples = 57691;
@@ -249,7 +250,7 @@ void TestYourApp::TestMeanderSignal() {
 
     const auto vec2 = GenerateSignal(data);
     const auto expected_vec2 = generateMeander(data);
-    QVERIFY(vec2 == expected_vec2);
+    PRAC_COMPARE(vec2, expected_vec2);
 
     data.wave_length = 100;
     data.samples = 57;
@@ -257,7 +258,7 @@ void TestYourApp::TestMeanderSignal() {
 
     const auto vec3 = GenerateSignal(data);
     const auto expected_vec3 = generateMeander(data);
-    QVERIFY(vec3 == expected_vec3);
+    PRAC_COMPARE(vec3, expected_vec3);
 }
 
 void TestYourApp::TestAttackDecayApplying() {
@@ -278,7 +279,7 @@ void TestYourApp::TestAttackDecayApplying() {
     ApplyDecayAndAttack(vec, max_length);
     applyDecay(expected_vec, max_length);
     applyAttack(expected_vec, max_length);
-    QVERIFY(vec == expected_vec);
+    PRAC_COMPARE(vec, expected_vec);
 
 }
 

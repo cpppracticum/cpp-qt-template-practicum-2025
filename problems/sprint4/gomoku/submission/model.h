@@ -19,7 +19,7 @@ public:
     Model(size_t field_size_x, size_t field_size_y)
         : field_size_x_(field_size_x), field_size_y_(field_size_y) {
     }
-    
+
     void Reset(size_t field_size_x, size_t field_size_y) {
         *this = Model(field_size_x, field_size_y);
     }
@@ -49,7 +49,7 @@ public:
         next_move_ = Invert(cur_symbol);
         return cur_symbol;
     }
-    
+
     Symbol GetNextPlayer() const {
         return next_move_;
     }

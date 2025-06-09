@@ -16,6 +16,7 @@
 
 #include "utils.h"
 
+#include "test_utils/practicum_assert.hpp"
 
 extern QString custom_url;
 extern QString custom_dir;
@@ -79,9 +80,7 @@ void TestYourApp::TestCustomUrl()
     clickWidget(pb_save);
     action();
 
-    QVERIFY2(custom_url == url, "Открытый url не соответствует ожидаемому");
-
-
+    PRAC_COMPARE2(custom_url, url, "Открытый url не соответствует ожидаемому");
 }
 
 void TestYourApp::TestCustomDir()
@@ -93,7 +92,7 @@ void TestYourApp::TestCustomDir()
     clickWidget(pb_save);
     action();
 
-    QVERIFY2(custom_dir == dir, "Открытая директория не соответствует ожидаемой");
+    PRAC_COMPARE2(custom_dir, dir, "Открытая директория не соответствует ожидаемой");
 }
 
 void TestYourApp::cleanupTestCase()

@@ -12,6 +12,7 @@
 
 #include <mainwindow.h>
 
+#include "test_utils/practicum_assert.hpp"
 
 namespace {
 
@@ -85,7 +86,7 @@ void TestYourApp::initTestCase()
     QVERIFY2(window->isVisible(), "Окно приложения не активируется");
 
     auto buttons = window->findChildren<QPushButton*>();
-    QVERIFY2(buttons.size() == 1, "Должна быть провно одна кнопка");
+    PRAC_COMPARE2(buttons.size(), 1, "Должна быть провно одна кнопка");
     yourButton = buttons.first();
 
     le_q = FindElementByName<QLineEdit>(window, "le_q");
@@ -102,7 +103,7 @@ void TestYourApp::Test1Plus2()
     le_q->setText("1");
     le_t->setText("2");
     QTest::mouseClick(yourButton, Qt::LeftButton);
-    QVERIFY2(le_qt->text() == "3", "Неверный результат");
+    PRAC_COMPARE2(le_qt->text(), "3", "Неверный результат");
 }
 
 void TestYourApp::Test20Plus22()
@@ -110,7 +111,7 @@ void TestYourApp::Test20Plus22()
     le_q->setText("20");
     le_t->setText("22");
     QTest::mouseClick(yourButton, Qt::LeftButton);
-    QVERIFY2(le_qt->text() == "42", "Неверный результат");
+    PRAC_COMPARE2(le_qt->text(), "42", "Неверный результат");
 }
 
 void TestYourApp::Test50Minus50()
@@ -118,7 +119,7 @@ void TestYourApp::Test50Minus50()
     le_q->setText("50");
     le_t->setText("-50");
     QTest::mouseClick(yourButton, Qt::LeftButton);
-    QVERIFY2(le_qt->text() == "0", "Неверный результат");
+    PRAC_COMPARE2(le_qt->text(), "0", "Неверный результат");
 }
 
 void TestYourApp::cleanupTestCase()

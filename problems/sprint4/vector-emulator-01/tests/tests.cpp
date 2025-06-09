@@ -18,6 +18,7 @@
 
 #include "utils.h"
 
+#include "test_utils/practicum_assert.hpp"
 
 class TestYourApp : public QObject
 {
@@ -128,14 +129,14 @@ std::vector<QString> TestYourApp::getVector() const {
 void TestYourApp::checkExpectedVector(const std::vector<QString>& expectedVector) const {
     const auto actual_vector = getVector();
 
-    QVERIFY2(expectedVector.size() == actual_vector.size(), "Размер вектора не совпадает с ожидаемым");
+    PRAC_COMPARE2(expectedVector.size(), actual_vector.size(), "Размер вектора не совпадает с ожидаемым");
     const auto size_from_string = txt_size->text().toUInt();
-    QVERIFY2(actual_vector.size() == size_from_string, "Размер в поле txt_size не совпадает с реальным");
+    PRAC_COMPARE2(actual_vector.size(), size_from_string, "Размер в поле txt_size не совпадает с реальным");
 
     for (size_t i = 0; i < expectedVector.size(); ++i) {
         const QString expected_string = QString("%1: %2").arg(i).arg(expectedVector.at(i));
         const auto& actual_string = actual_vector.at(i);
-        QVERIFY2(expected_string == actual_string, "Строка вектора не совпадает с ожидаемой");
+        PRAC_COMPARE2(expected_string, actual_string, "Строка вектора не совпадает с ожидаемой");
     }
 }
 
