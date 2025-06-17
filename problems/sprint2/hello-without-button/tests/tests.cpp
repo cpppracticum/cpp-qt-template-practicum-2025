@@ -13,6 +13,8 @@
 
 #include <mainwindow.h>
 
+#include "test_utils/practicum_assert.hpp"
+
 // add necessary includes here
 
 class TestYourApp : public QObject
@@ -34,7 +36,7 @@ class TestYourApp : public QObject
     template<class T>
     T* findElementByName(const QString& name) {
         for (auto label : window->findChildren<T*>())
-        {   
+        {
             if (label->objectName() == name)
             {
                 return label;
@@ -75,12 +77,12 @@ void TestYourApp::initTestCase()
 
     auto line_edits = window->findChildren<QLineEdit*>();
 
-    QVERIFY2(line_edits.size() == 1, "В приложении должно быть ровно одно поле QLineEdit");
+    PRAC_COMPARE2(line_edits.size(), 1, "В приложении должно быть ровно одно поле QLineEdit");
     textView = line_edits.first();
-    
+
     label = findElementByName<QLabel>("lbl_result");
     QVERIFY2(label != nullptr, "Метка с именем lbl_result отсутствует в приложении");
-    QVERIFY2(label->text() == "Введите имя", "Текст по умолчанию в метке lbl_result не совпадает с ожидаемым");
+    PRAC_COMPARE2(label->text(), "Введите имя", "Текст по умолчанию в метке lbl_result не совпадает с ожидаемым");
 
 }
 
@@ -89,12 +91,12 @@ void TestYourApp::TestInputText_1()
 
     QString name = "SuperName";
     textView->setText(name);
-    
+
     QString expected_text = "Привет из Qt, " + name + "!";
-    QVERIFY2(label->text() == expected_text, "Выведенный текст не совпадает с ожидаемым");
+    PRAC_COMPARE2(label->text(), expected_text, "Выведенный текст не совпадает с ожидаемым");
 
     textView->setText("");
-    QVERIFY2(label->text() == "Введите имя", "Выведенный при очищении поля ввода текст не совпадает с ожидаемым");
+    PRAC_COMPARE2(label->text(), "Введите имя", "Выведенный при очищении поля ввода текст не совпадает с ожидаемым");
 
 }
 
@@ -103,12 +105,12 @@ void TestYourApp::TestInputText_2()
 
     QString name = "Another super duper cool name";
     textView->setText(name);
-    
+
     QString expected_text = "Привет из Qt, " + name + "!";
-    QVERIFY2(label->text() == expected_text, "Выведенный текст не совпадает с ожидаемым");
+    PRAC_COMPARE2(label->text(), expected_text, "Выведенный текст не совпадает с ожидаемым");
 
     textView->setText("");
-    QVERIFY2(label->text() == "Введите имя", "Выведенный при очищении поля ввода текст не совпадает с ожидаемым");
+    PRAC_COMPARE2(label->text(), "Введите имя", "Выведенный при очищении поля ввода текст не совпадает с ожидаемым");
 
 }
 

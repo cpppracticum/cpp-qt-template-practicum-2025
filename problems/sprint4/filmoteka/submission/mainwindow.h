@@ -47,19 +47,19 @@ private:
     // Заполняет два списка. При этом выбирает
     // нужный фильм в одном из них.
     void ApplyModel(const Movie &selection);
-    
+
     // Заполняет интерфейс на основе данных фильма.
     void ApplyMovie(const Movie &movie);
-    
+
     // Получает фильм на основе данных интерфейса.
     Movie GetMovie() const;
 
     // Возвращает описание по фильму.
     static QString ToString(const Movie &movie);
-    
+
     // Делает из списка фильмов список строк.
     static QStringList ToString(const QList<Movie>& movies);
-    
+
 
 private:
     Ui::MainWindow *ui;

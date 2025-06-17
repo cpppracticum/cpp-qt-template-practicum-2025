@@ -14,7 +14,12 @@ SUBMISSION_PATH = ../submission
 
 DEFINES += ILOVEQT_IMAGE_FULL_PATH=$$absolute_path("../submission/i-love-qt.png")
 
+isEmpty(MOCK_LIB) {
+    MOCK_LIB=/tmp/practicum-qt-mocks
+}
+
 INCLUDEPATH += $$SUBMISSION_PATH
+INCLUDEPATH += $$MOCK_LIB
 
 TEMPLATE = app
 

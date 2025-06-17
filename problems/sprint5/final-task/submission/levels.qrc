@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>resources/levels/demo_level.json</file>
-        <file>resources/levels/main_level.json</file>
-    </qresource>
-</RCC>

@@ -12,7 +12,7 @@
 
 #include <mainwindow.h>
 
-// add necessary includes here
+#include "test_utils/practicum_assert.hpp"
 
 class TestYourApp : public QObject
 {
@@ -58,9 +58,9 @@ void TestYourApp::initTestCase()
 
 
     auto buttons = window->findChildren<QPushButton*>();
-    QVERIFY2(buttons.size() == 1, "В приложении должна быть ровно одна копка QPushButton");
+    PRAC_COMPARE2(buttons.size(), 1, "В приложении должна быть ровно одна копка QPushButton");
     yourButton = buttons.first();
-    
+
 }
 
 void TestYourApp::TestCloseButton()

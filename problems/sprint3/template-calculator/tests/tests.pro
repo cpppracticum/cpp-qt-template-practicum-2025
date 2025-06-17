@@ -13,7 +13,12 @@ SUBMISSION_PATH = ../submission
 
 DEFINES += "PRAC_TESTS"
 
+isEmpty(MOCK_LIB) {
+    MOCK_LIB=/tmp/practicum-qt-mocks
+}
+
 INCLUDEPATH += $$SUBMISSION_PATH
+INCLUDEPATH += $$MOCK_LIB
 
 TEMPLATE = app
 

@@ -13,6 +13,8 @@
 
 #include "prac/QPainter"
 
+#include "test_utils/practicum_assert.hpp"
+
 using namespace std;
 
 
@@ -244,7 +246,7 @@ void TestYourApp::ValidateSnowflake()
     LineSet set(1e-5, 0.1);
     set.Set(prac::QPainter::lines.begin(), prac::QPainter::lines.end());
 
-    QVERIFY2(prac::QPainter::lines.size() == expected_lines.size(), "Количество линий, которые были нарисовано, не совпадает с ожидаемым");
+    PRAC_COMPARE2(prac::QPainter::lines.size(), expected_lines.size(), "Количество линий, которые были нарисовано, не совпадает с ожидаемым");
     for (const auto& line: expected_lines)
     {
         bool line_is_found = set.HasLine(line);

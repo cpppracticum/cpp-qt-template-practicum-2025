@@ -17,7 +17,7 @@
 #include "calculator.h"
 #include "controller.h"
 
-
+#include "test_utils/practicum_assert.hpp"
 
 class TestYourApp : public QObject
 {
@@ -187,11 +187,11 @@ void TestYourApp::checkExtraButton(const QString& type)
 {
     if (type == "double" || type == "float") {
         QVERIFY2(tb_extra->isVisible(), "Extra button should be visible for floating point types");
-        QVERIFY2(tb_extra->text() == ".",
+        PRAC_COMPARE2(tb_extra->text(), ".",
             "Text on extra button for floating point types should be \".\"");
     } else if (type == "Rational") {
         QVERIFY2(tb_extra->isVisible(), "Extra button should be visible for Rational type");
-        QVERIFY2(tb_extra->text() == "/",
+        PRAC_COMPARE2(tb_extra->text(), "/",
             "Text on extra button for Rational type should be \"/\"");
     }
     else {
@@ -210,11 +210,11 @@ void TestYourApp::checkFormula(const std::string& operand_1, const std::string& 
     if (with_equals) {
         expected_formula +=" =";
     }
-    QVERIFY(l_formula->text().trimmed() == expected_formula.trimmed());
+    PRAC_COMPARE(l_formula->text().trimmed(), expected_formula.trimmed());
 }
 
 void TestYourApp::checkResult(const QString& expected_result) const {
-    QVERIFY(l_result->text().trimmed() == expected_result.trimmed());
+    PRAC_COMPARE(l_result->text().trimmed(), expected_result.trimmed());
 }
 
 void TestYourApp::chooseType(const QString& type) const {
@@ -356,8 +356,6 @@ void TestYourApp::TestInterfaceRationals() {
     }
 
     testOperation("Rational", "5 / 17", "^", "-1", "17 / 5");
-
-
 }
 
 
@@ -374,12 +372,12 @@ void TestYourApp::testErrorCode(
     inputNumber(operand_2);
     pushButton("=");
     auto expected_error = getErrorMessage(expected_error_code);
-    QVERIFY((l_result->text() == expected_error));
+    PRAC_COMPARE(l_result->text(), expected_error);
     auto hex_color = l_result->palette().text().color().name().toStdString();
-    QVERIFY2(hex_color == "#ff0000", "Цвет текста ошибки отличен от красного");
+    PRAC_COMPARE2(hex_color, "#ff0000", "Цвет текста ошибки отличен от красного");
     pushButton("C");
     hex_color = l_result->palette().text().color().name().toStdString();
-    QVERIFY2(hex_color == initial_hex_color, "Цвет текста результата не был восстановлен после сброса");
+    PRAC_COMPARE2(hex_color, initial_hex_color, "Цвет текста результата не был восстановлен после сброса");
 }
 
 

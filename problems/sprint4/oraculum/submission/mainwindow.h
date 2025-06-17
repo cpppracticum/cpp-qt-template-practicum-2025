@@ -19,7 +19,7 @@ public:
 
 private:
     void ShowQuestion();
-    
+
     void Reset();
 
 private slots:

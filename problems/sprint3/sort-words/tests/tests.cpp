@@ -16,6 +16,7 @@
 
 #include "utils.h"
 
+#include "test_utils/practicum_assert.hpp"
 
 namespace {
 
@@ -82,13 +83,13 @@ void TestYourApp::initTestCase()
 void TestYourApp::TestSort()
 {
     le_unsorted->setText("b c a");
-    QVERIFY2(le_sorted->text().trimmed() == "a b c", "Неверный результат для строки 'b c a'");
+    PRAC_COMPARE2(le_sorted->text().trimmed(), "a b c", "Неверный результат для строки 'b c a'");
 
     le_unsorted->setText("All good things");
-    QVERIFY2(le_sorted->text().trimmed() == "All good things", "Неверный результат для строки 'All good things'");
+    PRAC_COMPARE2(le_sorted->text().trimmed(), "All good things", "Неверный результат для строки 'All good things'");
 
     le_unsorted->setText("No one lives forever");
-    QVERIFY2(le_sorted->text().trimmed() == "forever lives No one", "Неверный результат для строки 'No one lives forever'");
+    PRAC_COMPARE2(le_sorted->text().trimmed(), "forever lives No one", "Неверный результат для строки 'No one lives forever'");
 }
 
 void TestYourApp::cleanupTestCase()

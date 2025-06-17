@@ -13,8 +13,7 @@
 
 #include <mainwindow.h>
 
-
-
+#include "test_utils/practicum_assert.hpp"
 
 int getDayNumber(int day, int month, int year)
 {
@@ -135,7 +134,7 @@ void TestYourApp::init()
 }
 
 void TestYourApp::TestDateMask() {
-    QVERIFY2(le_date->inputMask() == QString("00.00.0000"), "Неправильно установлена маска для поля ввода даты");
+    PRAC_COMPARE2(le_date->inputMask(), QString("00.00.0000"), "Неправильно установлена маска для поля ввода даты");
 }
 
 void TestYourApp::TestValidators()

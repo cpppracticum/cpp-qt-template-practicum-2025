@@ -13,6 +13,7 @@
 
 #include <mywindowwithimage.h>
 
+#include "test_utils/practicum_assert.hpp"
 
 #define MACRO_TO_STR_T_INNER(x) #x
 #define MACRO_TO_STR_T(x) MACRO_TO_STR_T_INNER(x)
@@ -85,12 +86,12 @@ void TestYourApp::init()
 void check_lbl_pixmap(QMainWindow* parent, QLabel* child)
 {
 
-    QVERIFY2(child->size() == parent->size(), "Размер виджета не равен размеру окна");
-    QVERIFY2(child->pos() == QPoint(0, 0), "Виджет не находится по координатам (0,0)");
+    PRAC_COMPARE2(child->size(), parent->size(), "Размер виджета не равен размеру окна");
+    PRAC_COMPARE2(child->pos(), QPoint(0, 0), "Виджет не находится по координатам (0,0)");
 
     QString image_path = MACRO_TO_STR_T(ILOVEQT_IMAGE_FULL_PATH);
     QPixmap* reference_pixmap = new QPixmap(image_path);
-    QVERIFY2(child->pixmap().toImage() == reference_pixmap->toImage(), "В QLabel нет нужной картинки");
+    PRAC_COMPARE2(child->pixmap().toImage(), reference_pixmap->toImage(), "В QLabel нет нужной картинки");
 }
 
 void TestYourApp::TestDefault()

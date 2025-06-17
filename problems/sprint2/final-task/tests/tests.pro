@@ -11,7 +11,12 @@ CONFIG += c++17
 
 SUBMISSION_PATH = ../submission
 
+isEmpty(MOCK_LIB) {
+    MOCK_LIB=/tmp/practicum-qt-mocks
+}
+
 INCLUDEPATH += $$SUBMISSION_PATH
+INCLUDEPATH += $$MOCK_LIB
 
 TEMPLATE = app
 

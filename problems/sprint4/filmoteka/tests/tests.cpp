@@ -23,6 +23,7 @@
 
 #include "utils.h"
 
+#include "test_utils/practicum_assert.hpp"
 
 class TestYourApp : public QObject
 {
@@ -127,10 +128,10 @@ void TestYourApp::checkLists(const std::vector<QString>& expected_wait, const st
         lines_done.push_back(item);
     }
 
-    QVERIFY2(lines_wait.size() == expected_wait.size(), "Размер списка непросмотренных фильмов не совпадает с ожидаемым!");
-    QVERIFY2(lines_done.size() == expected_done.size(), "Размер списка просмотренных фильмов не совпадает с ожидаемым!");
-    QVERIFY2(std::set<QString>(lines_wait.begin(), lines_wait.end()) == std::set<QString>(expected_wait.begin(), expected_wait.end()), "Информация о непросмотренных фильмах не совпадает с ожидаемой!");
-    QVERIFY2(std::set<QString>(lines_done.begin(), lines_done.end()) == std::set<QString>(expected_done.begin(), expected_done.end()), "Информация о просмотренных фильмах не совпадает с ожидаемой!");
+    PRAC_COMPARE2(lines_wait.size(), expected_wait.size(), "Размер списка непросмотренных фильмов не совпадает с ожидаемым!");
+    PRAC_COMPARE2(lines_done.size(), expected_done.size(), "Размер списка просмотренных фильмов не совпадает с ожидаемым!");
+    PRAC_COMPARE2(std::set<QString>(lines_wait.begin(), lines_wait.end()), std::set<QString>(expected_wait.begin(), expected_wait.end()), "Информация о непросмотренных фильмах не совпадает с ожидаемой!");
+    PRAC_COMPARE2(std::set<QString>(lines_done.begin(), lines_done.end()), std::set<QString>(expected_done.begin(), expected_done.end()), "Информация о просмотренных фильмах не совпадает с ожидаемой!");
 }
 
 void TestYourApp::TestFill() {

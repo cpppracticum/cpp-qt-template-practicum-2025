@@ -19,6 +19,7 @@
 
 #include "utils.h"
 
+#include "test_utils/practicum_assert.hpp"
 
 class TestYourApp : public QObject
 {
@@ -277,27 +278,27 @@ int TestYourApp::getIndex() const {
 void TestYourApp::checkExpectedVector() const {
     const auto actual_vector = getVector();
 
-    QVERIFY2(vec.size() == actual_vector.size(), "Размер вектора не совпадает с ожидаемым");
+    PRAC_COMPARE2(vec.size(), actual_vector.size(), "Размер вектора не совпадает с ожидаемым");
     const auto size_from_string = txt_size->text().toUInt();
-    QVERIFY2(actual_vector.size() == size_from_string, "Размер в поле txt_size не совпадает с реальным");
+    PRAC_COMPARE2(actual_vector.size(), size_from_string, "Размер в поле txt_size не совпадает с реальным");
     for (size_t i = 0; i < vec.size(); ++i) {
         const QString expected_string = QString("%1: %2").arg(i).arg(vec.at(i));
         const auto& actual_string = actual_vector.at(i);
-        QVERIFY2(expected_string == actual_string, "Строка вектора не совпадает с ожидаемой");
+        PRAC_COMPARE2(expected_string, actual_string, "Строка вектора не совпадает с ожидаемой");
     }
 }
 
 void TestYourApp::checkIndex() const {
     const auto actual = getIndex();
     const auto expected = it - vec.begin();
-    QVERIFY2(actual == expected, "Индекс выбранного элемента не совпадает с ожидаемым");
+    PRAC_COMPARE2(actual, expected, "Индекс выбранного элемента не совпадает с ожидаемым");
 }
 
 void TestYourApp::checkEnd() const {
     const auto size = list_widget->count();
     QVERIFY2(size, "В векторе отстствуют элементы, в том числе фиктивный элемент end");
     const auto *const end_element = list_widget->item(size - 1);
-    QVERIFY2(end_element->text() == "end", "Последний элемент вектора всегда должен быть end");
+    PRAC_COMPARE2(end_element->text(), "end", "Последний элемент вектора всегда должен быть end");
 }
 
 void TestYourApp::checkButtons() const {
@@ -305,9 +306,9 @@ void TestYourApp::checkButtons() const {
     // поскольку уже выполнены проверки совпадения векторов и итераторов
     const auto should_be_enabled = it != vec.end();
 
-    QVERIFY2(btn_edit->isEnabled() == should_be_enabled, "Кнопка Edit должна быть неактивна, когда итератор указывает на фиктивный элемент end, и активна в иных случаях");
-    QVERIFY2(btn_inc->isEnabled() == should_be_enabled, "Кнопка ++ должна быть неактивна, когда итератор указывает на фиктивный элемент end, и активна в иных случаях");
-    QVERIFY2(btn_erase->isEnabled() == should_be_enabled, "Кнопка erase должна быть неактивна, когда итератор указывает на фиктивный элемент end, и активна в иных случаях");
+    PRAC_COMPARE2(btn_edit->isEnabled(), should_be_enabled, "Кнопка Edit должна быть неактивна, когда итератор указывает на фиктивный элемент end, и активна в иных случаях");
+    PRAC_COMPARE2(btn_inc->isEnabled(), should_be_enabled, "Кнопка ++ должна быть неактивна, когда итератор указывает на фиктивный элемент end, и активна в иных случаях");
+    PRAC_COMPARE2(btn_erase->isEnabled(), should_be_enabled, "Кнопка erase должна быть неактивна, когда итератор указывает на фиктивный элемент end, и активна в иных случаях");
 
     const auto is_it_begin = it == vec.begin();
     QVERIFY2(btn_dec->isEnabled() != is_it_begin, "Кнопка -- должна быть неактивна, когда итератор указывает на начало вектора, и активна в иных случаях");
@@ -318,11 +319,11 @@ void TestYourApp::checkContent() const {
     // поскольку уже выполнены проверки совпадения векторов и итераторов
     const auto& actual_text = txt_elem_content->text();
     if (it == vec.end()) {
-        QVERIFY2(actual_text == "", "Текст в txt_elem_content должен отсутствовать, если итератор указывает на конец массива");
+        PRAC_COMPARE2(actual_text, "", "Текст в txt_elem_content должен отсутствовать, если итератор указывает на конец массива");
         return;
     };
     const auto& expected_text = *it;
-    QVERIFY2(actual_text == expected_text, "Текст в txt_elem_content не совпадает с ожидаемым");
+    PRAC_COMPARE2(actual_text, expected_text, "Текст в txt_elem_content не совпадает с ожидаемым");
 }
 
 void TestYourApp::checkCapacity() const {
@@ -336,7 +337,7 @@ void TestYourApp::checkSize() const {
     const auto size_str = txt_size->text();
     const size_t size = size_str.toUInt();
     const size_t expected_size = vec.size();
-    QVERIFY2(size == expected_size, "Размер вектора в txt_size не совпадает с ожидаемым");
+    PRAC_COMPARE2(size, expected_size, "Размер вектора в txt_size не совпадает с ожидаемым");
 }
 
 void TestYourApp::checkModel() const {
@@ -737,16 +738,16 @@ void TestYourApp::TestCount() {
     pushBackVector(lines);
     checkModel();
     const auto first_non_unique_line_quantity = count(lines.at(1));
-    QVERIFY2(first_non_unique_line_quantity == 5, "Количество вхождений строки не совпадает с ожидаемым");
+    PRAC_COMPARE2(first_non_unique_line_quantity, 5, "Количество вхождений строки не совпадает с ожидаемым");
 
     const auto second_non_unique_line_quantity = count(lines.at(7));
-    QVERIFY2(second_non_unique_line_quantity == 3, "Количество вхождений строки не совпадает с ожидаемым");
+    PRAC_COMPARE2(second_non_unique_line_quantity, 3, "Количество вхождений строки не совпадает с ожидаемым");
 
     for (const auto& line : {lines[0], lines[6], lines[10], lines[11]}) {
-        QVERIFY2(count(line) == 1, "Количество вхождений уникальной строки не совпадает с ожидаемым");
+        PRAC_COMPARE2(count(line), 1, "Количество вхождений уникальной строки не совпадает с ожидаемым");
     }
 
-    QVERIFY2(count("Line is not from vector") == 0, "Количество вхождений строки, отсутствующей в векторе, отлично от нуля");
+    PRAC_COMPARE2(count("Line is not from vector"), 0, "Количество вхождений строки, отсутствующей в векторе, отлично от нуля");
 }
 
 void TestYourApp::TestMinElement() {
